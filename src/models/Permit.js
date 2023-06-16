@@ -11,10 +11,23 @@ const Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
+    permitType: {
+      type: String,
+      enum: ['permission', 'onLeave', 'sick'],
+      default: 'permission',
+    },
     permitState: {
       type: String,
       enum: ['submitted', 'approved', 'rejected'],
-      default: 'onTime',
+      default: 'submitted',
     },
     createdAt: {
       type: Number,

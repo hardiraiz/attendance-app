@@ -4,6 +4,7 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable import/extensions */
 import dayjs from 'dayjs';
+import mongoose from 'mongoose';
 import startWorkingTime from '../utils/startWorkingTime.js';
 import attendanceExist from '../utils/attendanceExist.js';
 import Attendance from '../models/Attendance.js';
@@ -94,7 +95,11 @@ class AttendanceController {
       );
 
       if (attendance.checkOutTime) {
-        throw { code: 400, message: 'CHECK_IN_TIME_ALREADY_EXIST' };
+        throw { code: 400, message: 'CHECK_OUT_TIME_ALREADY_EXIST' };
+      }
+
+      if (req.body.checkOutTime.checkOutTime < attendance.checkInTime) {
+        throw { code: 400, message: 'CHECK_OUT_CANT_LESS_THAN_CHECK_IN' };
       }
 
       const checkOutTime = new Date(req.body.checkOutTime);
@@ -114,6 +119,37 @@ class AttendanceController {
           checkOutTime: attendance.checkOutTime,
           absentState: attendance.absentState,
         },
+      });
+    } catch (error) {
+      return res.status(error.code || 500).json({
+        status: false,
+        message: error.message,
+      });
+    }
+  }
+
+  async show(req, res) {
+    try {
+      if (req.jwt.role !== 'manager') {
+        throw { code: 403, message: 'FORBIDDEN_ACCESS_RIGHT' };
+      }
+      if (!req.params.id) {
+        throw { code: 400, message: 'REQUIRED_USER_ID' };
+      }
+      if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        throw { code: 400, message: 'INVALID_USER_ID' };
+      }
+
+      const attendance = await Attendance.find({ userId: req.params.id });
+      if (!attendance) {
+        throw { code: 404, message: 'ATTENDANCE_USER_NOT_FOUND' };
+      }
+
+      return res.status(200).json({
+        status: true,
+        message: 'SUCCESS_GET_USER_ATTENDANCE',
+        userId: req.params.id,
+        attendance,
       });
     } catch (error) {
       return res.status(error.code || 500).json({

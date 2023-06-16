@@ -50,6 +50,7 @@ class AuthController {
       const user = await User.create({
         fullname: req.body.fullname,
         email: req.body.email,
+        role: req.body.role,
         password: hash,
       });
 
@@ -66,6 +67,7 @@ class AuthController {
         status: true,
         message: 'USER_REGISTER_SUCCESS',
         fullname: user.fullname,
+        role: user.role,
         accessToken,
         refreshToken,
       });
