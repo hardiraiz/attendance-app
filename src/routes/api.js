@@ -5,6 +5,7 @@ import AuthController from '../controllers/AuthController.js';
 import AttendanceController from '../controllers/AttendanceController.js';
 import PermitController from '../controllers/PermitController.js';
 import UserController from '../controllers/UserController.js';
+import ReportController from '../controllers/ReportController.js';
 
 const route = express();
 
@@ -30,6 +31,6 @@ route.post('/user/permit', jwtAuth(), PermitController.store);
 route.put('/user/:id/permit/:permitId', jwtAuth(), PermitController.update);
 
 // Report
-route.get('/reports', jwtAuth());
+route.post('/reports', jwtAuth(), ReportController.report);
 
 export default route;

@@ -191,18 +191,24 @@ class PermitController {
 
       const permit = await Permit.findOne({ _id: req.params.permitId, userId: req.params.id });
       if (permit.permitState === 'approved') {
-        throw { code: 403, message: 'PERMIT_ALREADY_APPROVE' };
+        throw { code: 400, message: 'PERMIT_ALREADY_APPROVE' };
+      }
+      if (permit.permitState === 'rejected') {
+        throw { code: 400, message: 'PERMIT_ALREADY_REJECTED' };
       }
 
+      permit.permitState = req.body.permitState;
       const permitSave = await permit.save();
       if (!permitSave) {
         throw { code: 404, message: 'UPDATE_PERMIT_FAILED' };
       }
 
       const message = ['SUCCESS_UPDATE_PERMIT_STATUS'];
-      const updateCreateAttendances = await autoUpdateCreateAttendance(permit);
-      if (updateCreateAttendances) {
-        message.push(...updateCreateAttendances);
+      if (req.body.permitState === 'approved') {
+        const updateCreateAttendances = await autoUpdateCreateAttendance(permit);
+        if (updateCreateAttendances) {
+          message.push(...updateCreateAttendances);
+        }
       }
 
       return res.status(200).json({
