@@ -3,6 +3,26 @@
 
 
 
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/hardiraiz/attendance-app.git
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
 
 ## API Reference
 Import collection dan environment postman yang ada di folder postman, dan jangan lupa untuk mengatur environment sebelum menggunakan collection
@@ -53,7 +73,7 @@ Jika access token kadaluarsa kamu dapat menggunakan endpoint ini untuk mendapatk
 Endpoint yang hanya bisa diakses user dengan role _manager_ untuk mendapatkan list data user
 
 ```http
-  POST /users
+  GET /users
 ```
 
 ### 3. Attendance Route
@@ -110,7 +130,7 @@ Endpoint untuk mendapatkan seluruh request permit yang diajukan oleh employee, e
 Jika query parameter tidak diberikan maka endpoint akan mengembalikan seluruh permit status
 
 ```http
-  GET /pemit?permit_state=submitted
+  GET /permit?permit_state=submitted
 ```
 
 | Query | Type | Description                |
@@ -123,7 +143,7 @@ Endpoint ini mengembalikan list request permit yang dimiliki oleh employee.
 Jika query parameter tidak diberikan maka endpoint akan mengembalikan seluruh permit status
 
 ```http
-  GET /user/pemit?permit_state=submitted
+  GET /user/permit?permit_state=submitted
 ```
 
 | Query | Type | Description                |
@@ -136,7 +156,7 @@ Endpoint ini mengembalikan request permit berdasarkan Id Permit
 Jika role _manager_ akan mengembalikan permit request. Sedangkan jika role _employee_ endpoint hanya akan mengembalikan data yang dimilikinya
 
 ```http
-  GET /user/pemit/${id}
+  GET /user/permit/${id}
 ```
 
 | Parameter | Type | Description                |
@@ -153,7 +173,7 @@ Permit request juga tidak bisa diajukan jika diantara tanggal tersebut terdapat 
 Dapat mengajukan Permit kembali ketika permit sebelumnya ditolak
 
 ```http
-  POST /user/pemit
+  POST /user/permit
 ```
 
 | Body | Type | Description                |
@@ -171,7 +191,7 @@ Jika _manager_ menyetujuinya maka sistem akan mengenerate otomatis absensi izin 
 Permit yang telah disetujui maupun ditolak tidak dapat diubah kembali
 
 ```http
-  PUT /user/pemit
+  PUT /user/permit
 ```
 
 | Body | Type | Description                |
