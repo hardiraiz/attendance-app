@@ -277,7 +277,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"checkOutTime\": \"2023-06-16T17:30:00Z\"\r\n}",
+							"raw": "{\r\n    \"checkOutTime\": \"2023-06-01T017:30:00Z\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -285,14 +285,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{local}}/user/attendance/648c5e7df64c3c9923ff4d0d",
+							"raw": "{{local}}/user/attendance/648d5432dedef70e46f6296e",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"user",
 								"attendance",
-								"648c5e7df64c3c9923ff4d0d"
+								"648d5432dedef70e46f6296e"
 							]
 						}
 					},

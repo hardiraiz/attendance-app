@@ -97,7 +97,7 @@ Hanya bisa diakses oleh role _manager_ untuk mendapatkan list attendance user la
 
 
 #### c. Store
-Endpoint untuk melakukan proses checkin oleh user
+Endpoint untuk melakukan proses checkin oleh user, dalam satu hari hanya bisa melakukan satu kali check in apabila telah checkin maka request tidak dilanjutkan
 ```http
   POST /user/attendance
 ```
@@ -107,7 +107,7 @@ Endpoint untuk melakukan proses checkin oleh user
 | `checkInTime` | `datetime` | **Required**. gunakan UTC format "2023-06-16T07:30:00Z" |
 
 #### d. Update
-Endpoint untuk melakukan proses checkout oleh user
+Endpoint untuk melakukan proses checkout oleh user, dalam satu hari hanya bisa melakukan satu kali check out dan checkOutTime harus pada hari yang sama dengan checkInTime apabila tidak maka request tidak dilanjutkan
 ```http
   PUT /user/attendance/${id}
 ```

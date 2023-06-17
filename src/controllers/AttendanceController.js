@@ -97,9 +97,19 @@ class AttendanceController {
       if (attendance.checkOutTime) {
         throw { code: 400, message: 'CHECK_OUT_TIME_ALREADY_EXIST' };
       }
+      const startDay = new Date(attendance.checkInTime);
+      const endDay = new Date(req.body.checkOutTime);
 
-      if (req.body.checkOutTime.checkOutTime < attendance.checkInTime) {
+      if (endDay < startDay) {
         throw { code: 400, message: 'CHECK_OUT_CANT_LESS_THAN_CHECK_IN' };
+      }
+
+      const isSameDay = startDay.getUTCDate() === endDay.getUTCDate()
+                && startDay.getUTCMonth() === endDay.getUTCMonth()
+                && startDay.getUTCFullYear() === endDay.getUTCFullYear();
+
+      if (!isSameDay) {
+        throw { code: 400, message: 'CHECK_OUT_TIME_NOT_IN_SAME_DAY' };
       }
 
       const checkOutTime = new Date(req.body.checkOutTime);
